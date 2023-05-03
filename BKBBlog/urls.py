@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from article import views
 
-#creating a list of URL patterns
+# Creating a list of URL patterns
 urlpatterns = [
     # URL pattern for Django admin site
     path('admin/', admin.site.urls),
