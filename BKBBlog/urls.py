@@ -17,12 +17,14 @@ Including another URLconf
 #importing necessary modules and packages
 from django.contrib import admin
 from django.urls import path
-from article.views import index
+from article import views
 
 #creating a list of URL patterns
 urlpatterns = [
-    #URL pattern for Django admin site
+    # URL pattern for Django admin site
     path('admin/', admin.site.urls),
-    #URL pattern for the root path of the website which maps to the index function in article.views module
-    path('', index, name = "index")
+    # URL pattern for the root path of the website which maps to the index function in article.views module
+    path('', views.index, name = "index"),
+    # URL pattern for the path of the website which maps to the about function in article.views module
+    path('about/', views.about, name = "about"),
 ]

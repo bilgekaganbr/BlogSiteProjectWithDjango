@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -119,6 +120,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+"""
+ This line defines the 'STATICFILES_DIRS' variable as a tuple containing a single element
+ The element is a string that is a path to the 'static' directory located in the project's base directory (as defined by 'BASE_DIR')
+ This variable is used to tell Django where to find additional static files, 
+ such as those that are specific to your project and not part of an installed app
+"""
+STATICFILES_DIRS = (
+    # This is the path to the 'static' directory
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
