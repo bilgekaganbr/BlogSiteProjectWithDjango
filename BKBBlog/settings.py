@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #add article application
-    'article'
+    # Add article application
+    'article',
+    # Add user application(not necessary since not any model creaion is needed, therefore there is no need for any migration)
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'BKBBlog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #find templates in the templates folder
+        # Find templates in the templates folder
         'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -128,7 +130,7 @@ STATIC_URL = 'static/'
  such as those that are specific to your project and not part of an installed app
 """
 STATICFILES_DIRS = (
-    # This is the path to the 'static' directory
+    # Path to the 'static' directory
     os.path.join(BASE_DIR, 'static'),
 )
 

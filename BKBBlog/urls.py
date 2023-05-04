@@ -16,7 +16,7 @@ Including another URLconf
 """
 # Importing necessary modules and packages
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from article import views
 
 # Creating a list of URL patterns
@@ -25,6 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # URL pattern for the root path of the website which maps to the index function in article.views module
     path('', views.index, name = "index"),
-    # URL pattern for the path of the website which maps to the about function in article.views module
+    # URL pattern for the about/ path of the website which maps to the about function in article.views module
     path('about/', views.about, name = "about"),
+    # Map all URLs starting with "articles/" to the urlpatterns defined in the "article.urls" module
+    path('articles/', include("article.urls")),
+    # Map all URLs starting with "user/" to the urlpatterns defined in the "user.urls" module
+    path('user/', include("user.urls")),
 ]
