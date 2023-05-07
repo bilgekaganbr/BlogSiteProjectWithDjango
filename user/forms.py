@@ -3,7 +3,7 @@ from django import forms
 # Define a registration form that users can fill out to create an account
 class RegisterForm(forms.Form):
 
-    # Define the form inputs for the username and password
+    # Define the form inputs for the username, password, and confirm password
     username = forms.CharField(max_length = 50, label = "Username")
     password = forms.CharField(max_length = 20, label = "Password", widget = forms.PasswordInput)
     confirm = forms.CharField(max_length = 20, label = "Confirm Password", widget = forms.PasswordInput)
@@ -21,10 +21,20 @@ class RegisterForm(forms.Form):
             # Check if the password and confirm fields match, and raise a validation error if they don't
             raise forms.ValidationError("Passwords do not match.")
         
+        else:
+        
         # If the form data is valid, return a cleaned data dictionary containing the username and password
-        values = {  
-            "username" : username,
-            "password" : password,
-        }
+            values = {  
+                "username" : username,
+                "password" : password,
+            }
 
-        return values
+            return values
+
+# Define a login form that users can fill out to login       
+class LoginForm(forms.Form):
+
+    # Define the form inputs for the username and password
+    username = forms.CharField(label = "Username")
+    password = forms.CharField(label = "Password", widget = forms.PasswordInput)
+
