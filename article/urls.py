@@ -7,6 +7,8 @@ from . import views
 app_name = "article"
 
 urlpatterns = [
-    # URL pattern for the articles/create/ path of the website which maps to the index function(for now) in article.views module
-    path('create/', views.index, name = "index"),
+    # URL pattern for the articles/dashboard/ path of the website which maps to the dashboard function in article.views module
+    path('dashboard/', views.dashboard, name = "dashboard"),
+    # URL pattern for the articles/addarticle/ path of the website which maps to the addArticle function in article.views module
+    path('addarticle/', views.addArticle, name = "addarticle")
 ]

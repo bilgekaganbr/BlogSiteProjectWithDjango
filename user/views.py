@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
 # Create your views here.
@@ -12,6 +12,11 @@ def register(request):
 
     # Create a new instance of the RegisterForm using the request.POST data, if available
     form = RegisterForm(request.POST or None)
+
+    # Create a context dictionary containing the form object
+    context = {
+        "form" : form
+    }
 
     # Check if the form is valid, i.e., if all required fields have been filled out correctly
     if form.is_valid():
@@ -39,12 +44,7 @@ def register(request):
     
     else:
 
-        # If the form is not valid, create a context dictionary containing the form object
-        context = {
-            "form" : form
-        }
-
-         # Render the register.html template with the context dictionary
+         # If the form is not valid, return an HTTP response containing the rendered "register.html" template with the form
         return render(request, "register.html", context)
 
 # Define the function-based view to handle requests to the user/login/ path of the website
@@ -53,6 +53,7 @@ def log_in(request):
     # Create a new instance of the LoginForm using the request.POST data, if available
     form = LoginForm(request.POST or None)
 
+    # Create a context dictionary containing the form object
     context = {
         "form" : form
     }
@@ -69,9 +70,10 @@ def log_in(request):
 
         if user is None:
             
-            # If authentication fails, display an error message and render the login page again
+            # If authentication fails, display an error message
             messages.info(request, "The user name or password is incorrect.")
 
+            # Return an HTTP response containing the rendered "login.html" template with the form
             return render(request, "login.html", context)
         
         else:
@@ -86,9 +88,17 @@ def log_in(request):
             return redirect("index")
     else:
 
-        # If the form is not valid, render the login page with the form
+        # If the form is not valid, return an HTTP response containing the rendered "login.html" template with the form
         return render(request, "login.html", context)
 
+# Define the function-based view to handle requests to the user/logout/ path of the website
 def log_out(request):
 
-    pass
+    # Log out the user
+    logout(request)
+
+    # Display a success message
+    messages.success(request, "You have successfully logout.")
+
+    # Redirect to the index page
+    return redirect("index")
