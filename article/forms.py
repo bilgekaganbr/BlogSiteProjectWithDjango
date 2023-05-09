@@ -8,4 +8,4 @@ class ArticleForm(forms.ModelForm):
         
         # Set the Meta options for the form, including the model and the fields to include
         model = Article
-        fields = ["title", "content"]
+        fields = ["title", "content", "article_image"]

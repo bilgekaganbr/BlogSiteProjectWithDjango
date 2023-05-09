@@ -46,7 +46,11 @@ INSTALLED_APPS = [
     # Add crispy_forms application
     'crispy_forms',
     # Add crispy_bootstrap application for using crispy forms with bootstrap4
-    'crispy_bootstrap4'
+    'crispy_bootstrap4',
+    # Add ck editor application
+    'ckeditor',
+    # Add django cleanup application
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -139,10 +144,26 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# Set the static root directory for collecting static files during deployment
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 # Set the allowed template packs for crispy-forms to 'bootstrap4'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 # Set the default template pack for crispy-forms to 'bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Configuration settings for CKEditor
+CKEDITOR_CONFIGS = {
+    "default" : {
+        "removePlugins" : "stylesheetparser",
+        "allowedContent" : True,
+        "width" : "100%",
+    }
+}
+
+# Set the URL and root directory for media files
+MEDIA_URL = "/media/"
+MEDIA_ROOT= os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
