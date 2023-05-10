@@ -1,6 +1,7 @@
 # Import necessary modules and packages
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 from .models import Article
 
@@ -18,12 +19,35 @@ def about(request):
      # Return an HTTP response containing the rendered "about.html" template
      return render(request, "about.html")
 
+def articles(request):
+
+     # Retrieve the keyword parameter from the request's GET parameters
+     keyword = request.GET.get("keyword")
+
+     # Check if a keyword is provided
+     if keyword:
+
+          # Retrieve all articles from the database based on the provided keyword
+          articles = Article.objects.filter(title__contains = keyword)
+
+          # Return an HTTP response containing the rendered "articles.html" template with the filtered articles
+          return render(request, "articles.html", {"articles" : articles})
+
+     # If no keyword is provided, retrieve all articles from the database
+     articles = Article.objects.all()
+
+     # Return an HTTP response containing the rendered "articles.html" template with all articles
+     return render(request, "articles.html", {"articles" : articles})
+
+# Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
+@login_required(login_url = "user:login")
 # Define the function-based view to handle requests to the "/articles/dashboard" path of the website
 def dashboard(request):
      
      # Retrieve all articles from the database authored by the current user
      articles = Article.objects.filter(author = request.user)
 
+     # Create a context dictionary containing the form object
      context = {
           "articles" : articles
      }
@@ -31,6 +55,8 @@ def dashboard(request):
      # Return an HTTP response containing the rendered "dashboard.html" template with articles
      return render(request, "dashboard.html", context)
 
+# Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
+@login_required(login_url = "user:login")
 # Define the function-based view to handle requests to the "/articles/addarticle" path of the website
 def addArticle(request):
 
@@ -56,8 +82,8 @@ def addArticle(request):
           # If adding article is successful, display a success message
           messages.success(request, "Article successfully created.")
 
-          # Redirect to the index page
-          return redirect("index")
+          # Redirect to the article dashboard page
+          return redirect("article:dashboard")
 
      # Return an HTTP response containing the rendered "addarticle.html" template with the form
      return render(request, "addarticle.html", context)
@@ -71,6 +97,8 @@ def detail(request, id):
      # Return an HTTP response containing the rendered "detail.html" template with the article 
      return render(request, "detail.html", {"article" : article})
 
+# Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
+@login_required(login_url = "user:login")
 # Define the function-based view to handle requests to the /articles/update/articleid path of the website
 def update(request, id):
 
@@ -99,8 +127,29 @@ def update(request, id):
           # If adding article is successful, display a success message
           messages.success(request, "Article successfully updated.")
 
-          # Redirect to the index page
-          return redirect("index")
+          # Redirect to the article dashboard page
+          return redirect("article:dashboard")
 
      # Return an HTTP response containing the rendered "update.html" template with the form
      return render(request, "update.html", context)
+
+# Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
+@login_required(login_url = "user:login")
+# Define the function-based view to handle requests to the /articles/delete/articleid path of the website
+def delete(request, id):
+
+     # Retrieve the article object with the given id from the database or return a 404 page if not found
+     article = get_object_or_404(Article, id = id)
+
+     # Delete the article object
+     article.delete()
+
+     # If deleting article is successful, display a success message
+     messages.success(request, "Article successfully deleted.")
+
+     # Redirect to the article dashboard page
+     return redirect("article:dashboard")
+
+def comment(request, id):
+
+     pass

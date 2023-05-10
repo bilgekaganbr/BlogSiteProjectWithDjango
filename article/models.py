@@ -22,3 +22,19 @@ class Article(models.Model):
     def __str__(self):
 
         return self.title
+    
+class Comment(models.Model):
+
+    # Define the article of the comment as a foreign key to the Article model
+    article = models.ForeignKey(Article, on_delete = models.CASCADE, verbose_name = "Article", related_name = "comments")
+    # Define the author of the comment as a character field with maximum length of 50 characters
+    comment_author = models.CharField(max_length = 50, verbose_name = "Name")
+    # Define the content of the comment as a character field with maximum length of 200 characters
+    comment_content = models.CharField(max_length = 200, verbose_name = "Comment")
+    # Define the created date of the comment as a date time field that automatically adds the current date and time
+    comment_date = models.DateTimeField(auto_now_add = True)
+
+    # Define the string representation of the comment
+    def __str__(self):
+
+        return self.comment_content

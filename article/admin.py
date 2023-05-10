@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Import the Article model from the models.py file
-from.models import Article
+from.models import Article, Comment
 
 # Register your models here.
 
@@ -26,4 +26,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
         # Specify the model for the ArticleAdmin model
         model = Article 
+
+# Register the Comment model in the admin site
+admin.site.register(Comment)
 

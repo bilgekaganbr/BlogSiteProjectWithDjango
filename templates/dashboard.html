@@ -3,7 +3,7 @@
 <hr />
 <p>Welcome, <small>{{ request.user.username }}</small></p>
 <hr />
-<a class="btn btn-danger" href="/articles/addarticle">Add Article</a>
+<a class="btn btn-danger" href="{% url 'article:addarticle' %}">Add Article</a>
 <hr />
 {% if articles %}
 <table class="table">
@@ -22,17 +22,17 @@
     <tr>
       <th scope="row">{{ article.id }}</th>
       <td>
-        <a href="/articles/article/{{ article.id }}">{{ article.title }}</a>
+        <a href="{% url 'article:detail' article.id %}">{{ article.title }}</a>
       </td>
       <td>{{ article.author.username }}</td>
       <td>{{ article.created_date }}</td>
       <td>
-        <a href="/articles/update/{{ article.id }}" class="btn btn-danger"
+        <a href="{% url 'article:update' article.id %}" class="btn btn-danger"
           >Update</a
         >
       </td>
       <td>
-        <a href="/articles/delete/{{ article.id }}" class="btn btn-danger"
+        <a href="{% url 'article:delete' article.id %}" class="btn btn-danger"
           >Delete</a
         >
       </td>

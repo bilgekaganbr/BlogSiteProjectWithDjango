@@ -15,7 +15,7 @@
   <body>
     {% include "includes/navbar.html" %}
 
-    <div style="margin-top: 100px" class="container">
+    <div style="margin-top : 100px; margin-bottom : 100px" class="container">
       {% if messages %} 
         {% for message in messages %} 
           {% if message.tags == "info" %}
@@ -43,6 +43,9 @@
       src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
       integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"
     ></script>
   </body>
 </html>

@@ -10,31 +10,31 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="/">BKB Blog</a>
+  <a class="navbar-brand" href="{% url 'index' %}">BKB Blog</a>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/about">About Us</a>
+        <a class="nav-link" href="{% url 'about' %}">About Us</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/articles">Articles</a>
+        <a class="nav-link" href="{% url 'article:articles' %}">Articles</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       {% if request.user.is_authenticated %}
       <li class="nav-item active">
-        <a class="nav-link" href="/articles/dashboard">Dashboard</a>
+        <a class="nav-link" href="{% url 'article:dashboard' %}">Dashboard</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/user/logout">Logout</a>
+        <a class="nav-link" href="{% url 'user:logout' %}">Logout</a>
       </li>
       {% else %}
       <li class="nav-item active">
-        <a class="nav-link" href="/user/login">Login</a>
+        <a class="nav-link" href="{% url 'user:login' %}">Login</a>
       </li>
       {% endif %}
       <li class="nav-item active">
-        <a class="nav-link" href="/user/register">Register</a>
+        <a class="nav-link" href="{% url 'user:register' %}">Register</a>
       </li>
     </ul>
   </div>
