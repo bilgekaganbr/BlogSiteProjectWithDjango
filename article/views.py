@@ -155,7 +155,7 @@ def delete(request, id):
 
 # Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
 @login_required(login_url = "user:login")
-# Define the function-based view to handle requests to the /articles/comment/articleid path of the website to make comment
+# Define the function-based view to handle requests to the /articles/comment/articleid path of the website to add comment
 def comment(request, id):
 
      # Retrieve the article object with the given id from the database or return a 404 page if not found
