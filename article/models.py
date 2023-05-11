@@ -23,6 +23,11 @@ class Article(models.Model):
 
         return self.title
     
+    class Meta:
+
+        # Define the ordering of the model instances in order to sort articles in reverse order by created date
+        ordering = ['-created_date']
+    
 class Comment(models.Model):
 
     # Define the article of the comment as a foreign key to the Article model
@@ -38,3 +43,8 @@ class Comment(models.Model):
     def __str__(self):
 
         return self.comment_content
+    
+    class Meta:
+
+        # Define the ordering of the model instances in order to sort comments in reverse order by comment date
+        ordering = ['-comment_date']

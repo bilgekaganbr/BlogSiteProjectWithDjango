@@ -1,9 +1,9 @@
 # Import necessary modules and packages
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
-from .models import Article
+from .models import Article, Comment
 
 # Create your views here.
 
@@ -94,8 +94,11 @@ def detail(request, id):
      # Retrieve the article object with the given id from the database or return a 404 page if not found
      article = get_object_or_404(Article, id = id)
 
+     # Retrieve all comments associated with the article
+     comments = article.comments.all()
+
      # Return an HTTP response containing the rendered "detail.html" template with the article 
-     return render(request, "detail.html", {"article" : article})
+     return render(request, "detail.html", {"article" : article, "comments" : comments})
 
 # Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
 @login_required(login_url = "user:login")
@@ -150,6 +153,27 @@ def delete(request, id):
      # Redirect to the article dashboard page
      return redirect("article:dashboard")
 
+# Apply login_required decorator to restrict access to authenticated users only and redirect the unauthenticated users to the login page
+@login_required(login_url = "user:login")
+# Define the function-based view to handle requests to the /articles/comment/articleid path of the website to make comment
 def comment(request, id):
 
-     pass
+     # Retrieve the article object with the given id from the database or return a 404 page if not found
+     article = get_object_or_404(Article, id = id)
+
+     if request.method == "POST":
+
+          # Retrieve the comment author and content from the POST data
+          comment_author = request.POST.get("comment_author")
+          comment_content = request.POST.get("comment_content")
+
+          # Create a new Comment object
+          newComment = Comment(comment_author = comment_author, comment_content = comment_content)
+          # Associate the comment with the article
+          newComment.article = article
+          
+          # Save the new comment obeject to the database
+          newComment.save()
+
+     # Redirect to the article detail page with the given id
+     return redirect(reverse("article:detail", kwargs = {"id" : id}))
